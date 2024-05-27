@@ -1,0 +1,138 @@
+/* =================================== Profile ==================================== */
+.profile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.social-media {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.social-media a {
+  color: var(--color-gray-900);
+  font-size: 1.5rem;
+}
+
+.social-media a:hover {
+  color: var(--color-primary);
+}
+
+.profile-body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.left-sidebar,
+.right-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+  display: 50%;
+}
+
+.avatar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  position: relative;
+}
+
+.profile-avatar {
+  width: 15rem;
+  border: 1rem solid var(--color-white);
+  border-radius: 100%;
+  background-color: var(--color-red);
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-4);
+}
+
+.avatar-wrapper form input {
+  display: none;
+}
+.avatar-wrapper form label,
+.avatar-wrapper form button {
+  font-size: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  background-color: var(--color-white);
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.author-bio {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: var(--radius-4);
+}
+
+.author-bio .bio {
+  height: 5rem;
+  width: 20rem;
+  border-radius: var(--radius-4);
+  border: none;
+  outline: none;
+  padding: 1rem;
+  resize: none;
+  background-color: var(--color-white);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+}
+
+.author-details {
+  width: 100%;
+}
+
+.author-details form {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* background-color: crimson; */
+}
+
+.author-details form input {
+  width: 70%;
+  background-color: var(--color-white);
+}
+
+.author-details form input:focus {
+  outline: none;
+  background-color: var(--color-gray-700);
+  color: var(--color-white);
+}
+
+.author-details form button {
+  width: 70%;
+}
+
+
+
+/* Success or error msg */

@@ -1,0 +1,27 @@
+
+/* =================================== Author-Card ==================================== */
+.author-placed {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.author-card {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  background: var(--color-white);
+  padding: 1rem;
+  border-radius: var(--radius-4);
+}
+
+.author-card .author-avatar img {
+  width: 4.5rem;
+  aspect-ratio: 1/1;
+  border-radius: var(--radius-4);
+}
+
+.author-card .author-details h5 {
+  font-size: 1rem;
+}
