@@ -6,25 +6,33 @@ import { AiOutlineClose } from "react-icons/ai";
 import Logo from "../assets/images/logo.png";
 
 const Header = () => {
+  // ! loggedIn Author
+  const authorID = localStorage.getItem("userID") || "007";
   // pathname
   const { pathname } = useLocation();
 
   // mobile device, navbar toggle
-  const [showNav, setShowNav] = useState(
-    window.innerWidth > 800 ? true : false
-  );
+  const [showNav, setShowNav] = useState(window.innerWidth > 900);
 
-  // closeNav
+  // closeNav on small window
   const closeNavHandler = () => {
-    if (window.innerWidth < 800) {
+    if (window.innerWidth < 900) {
       setShowNav(false);
     } else {
       setShowNav(true);
     }
   };
 
-  // ! loggedIn Author
-  const authorID = localStorage.getItem("userID") || "007";
+  useEffect(() => {
+    window.addEventListener("resize", closeNavHandler);
+
+    // Call handleResize initially to set correct state
+    closeNavHandler();
+
+    return () => {
+      window.removeEventListener("resize", closeNavHandler);
+    };
+  }, []);
 
   // change to dark on scroll
   useEffect(() => {
@@ -41,14 +49,14 @@ const Header = () => {
 
   // display nav on big screen
   useEffect(() => {
-    closeNavHandler()
-  }, [window.innerWidth, window.resizeTo])
+    closeNavHandler();
+  }, []);
 
   return (
     <nav>
       <div className="container navbar">
         {/* logo and way to home */}
-        <Link to="/" className="nav-logo" onClick={closeNavHandler}>
+        <Link to="/" className="nav-logo" onClick={() => setShowNav(false)}>
           <img src={Logo} alt="logo" />
           <h1>
             Cosmos<span>.blog</span>
@@ -57,7 +65,7 @@ const Header = () => {
 
         {/* links */}
         {showNav && (
-          <ul className="nav-menu" onClick={closeNavHandler}>
+          <ul className="nav-menu" onClick={() => setShowNav(false)}>
             <li>
               <Link to="/">Home</Link>
             </li>

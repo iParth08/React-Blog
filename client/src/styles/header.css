@@ -23,12 +23,12 @@ nav {
 }
 
 .navbar {
-  min-height: 10vh;
+  min-height: 8vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 5rem;
+  padding: 0.8rem 5rem;
   /* background-color: aqua; */
 }
 
@@ -53,11 +53,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .navbar .nav-menu li {
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 

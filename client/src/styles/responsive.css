@@ -1,6 +1,6 @@
 /* =============== media queries ======================== */
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   /* Common for all */
   body {
     font-size: 0.8rem;
@@ -48,7 +48,7 @@
     position: absolute;
     flex-direction: column;
     gap: 0;
-    top: 10vh;
+    top: 14vh;
     right: 0;
   }
 
@@ -56,26 +56,26 @@
     width: 100%;
     box-shadow: -2rem 4rem 4rem rgba(0, 0, 0, 0.26);
 
-    animation: dropdownimation 200ms ease-out forwards;
+    animation: dropdownimation 100ms ease-out forwards;
     opacity: 0;
     transform: translateX(90deg);
     transform-origin: top;
   }
 
   .navbar .nav-menu li:nth-child(2) {
-    animation-delay: 300ms;
+    animation-delay: 200ms;
   }
 
   .navbar .nav-menu li:nth-child(3) {
-    animation-delay: 500ms;
+    animation-delay: 300ms;
   }
 
   .navbar .nav-menu li:nth-child(4) {
-    animation-delay: 700ms;
+    animation-delay: 400ms;
   }
 
   .navbar .nav-menu li:nth-child(5) {
-    animation-delay: 900ms;
+    animation-delay: 500ms;
   }
 
   .navbar .nav-menu li a {
@@ -90,6 +90,13 @@
     font-size: 1.5rem;
     cursor: pointer;
     background: transparent;
+  }
+
+  .dark .nav-logo h1,
+  .dark .nav-menu li a,
+  .dark .nav-toggle {
+    color: var(--color-white);
+    background-color: var(--color-gray-700);
   }
 
   /* posts */
@@ -135,9 +142,8 @@
     grid-template-columns: 1fr;
   }
 
-
-
-  .author-details small, .author-details h5{
+  .author-details small,
+  .author-details h5 {
     font-size: 0.8rem;
   }
 
@@ -145,7 +151,6 @@
   .dash-post-item {
     flex-direction: column;
     padding: 0.5rem 1rem;
-    
   }
 
   .dash-post-item .post-data {
@@ -160,9 +165,7 @@
 
   .dash-post-item .post-data h5 {
     font-size: 1rem;
-
   }
-
 
   /* Footer */
   .footer .category-list {

@@ -18,7 +18,9 @@ const Login = () => {
   return (
     <div className="wrapper">
       <div className="container form-page">
-        <h3>The stars are calling. Log in and answer the cosmos.</h3>
+        <h1>
+          The stars are calling. <span>Log In</span> and answer the cosmos.
+        </h1>
         <form>
           <p className="form-error">Error Message</p>
 

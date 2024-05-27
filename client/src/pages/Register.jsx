@@ -22,7 +22,9 @@ const Register = () => {
   return (
     <div className="wrapper">
       <div className="container form-page">
-        <h3>Unlock the universe. Register now to explore the stars with us.</h3>
+        <h1 className="page-heading">
+          Unlock the universe. <span>Register</span> now to explore.
+        </h1>
         <form>
           <p className="form-error">Error Message</p>
           <input
