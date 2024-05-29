@@ -56,7 +56,7 @@ const Header = () => {
     <nav>
       <div className="container navbar">
         {/* logo and way to home */}
-        <Link to="/" className="nav-logo" onClick={() => setShowNav(false)}>
+        <Link to="/" className="nav-logo" onClick={() => closeNavHandler()}>
           <img src={Logo} alt="logo" />
           <h1>
             Cosmos<span>.blog</span>
@@ -65,7 +65,7 @@ const Header = () => {
 
         {/* links */}
         {showNav && (
-          <ul className="nav-menu" onClick={() => setShowNav(false)}>
+          <ul className="nav-menu" onClick={() => closeNavHandler()}>
             <li>
               <Link to="/">Home</Link>
             </li>
