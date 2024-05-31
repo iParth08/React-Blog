@@ -29,3 +29,6 @@
 14. FileUpload : middleware set up for Avatar in index.js
 15. Renaming avatar to avoid conflicts using uuid
 16. Authentication middleware for protected routes : place just in routes before controller
+17. Avatar upload and edit user complete
+
+18. Working on Post Controller Body

@@ -7,8 +7,9 @@ import { v4 as uuid } from "uuid";
 import fs from "fs";
 import path from "path";
 
-const __dirname = path.resolve();
+const __dirname = path.resolve();  //* to get absolute path ??
 // console.log(__dirname);
+
 // ================================== Register User ==================================
 // Task : register new users
 // Post : /api/users/register
@@ -48,9 +49,9 @@ const registerUser = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    // save user
+    // save new user
     await newUser.save();
-    res.json({ message: `User ${newUser.email} Registration Successful` });
+    res.json({ message: "User Registered Successfully", data: newUser });
   } catch (error) {
     return next(new HttpError("User Registration Failed", 422));
   }
@@ -87,7 +88,9 @@ const loginUser = async (req, res, next) => {
     });
 
     // success
-    res.status(200).json({ name, token });
+    res
+      .status(200)
+      .json({ message: `User ${name}, Logged In Successfully`, data: token });
   } catch (error) {
     return next(
       new HttpError("User Login Failed. Please check credentials", 422)
@@ -111,12 +114,9 @@ const changeAvatar = async (req, res, next) => {
 
     // unlink/delete old avatar if exists
     if (user.avatar) {
-      fs.unlinkSync(
-        path.join(__dirname, "..", "uploads", user.avatar),
-        (err) => {
-          if (err) return next(new HttpError(err, 500));
-        }
-      );
+      fs.unlinkSync(path.join(__dirname, "uploads", user.avatar), (err) => {
+        if (err) return next(new HttpError(err, 500));
+      });
     }
 
     // work on incoming avatar
@@ -148,23 +148,20 @@ const changeAvatar = async (req, res, next) => {
     const avatarName = Date.now() + "-" + uuid() + "-" + avatar.name;
 
     // save avatar
-    avatar.mv(
-      path.join(__dirname, "uploads", avatarName),
-      async (err) => {
-        if (err) return next(new HttpError(err, 500));
+    avatar.mv(path.join(__dirname, "uploads", avatarName), async (err) => {
+      if (err) return next(new HttpError(err, 500));
 
-        const updatedAvatar = await User.findByIdAndUpdate(
-          req.user.id,
-          { avatar: avatarName },
-          { new: true }
-        );
+      const updatedAvatar = await User.findByIdAndUpdate(
+        req.user.id,
+        { avatar: avatarName },
+        { new: true }
+      );
 
-        if (!updatedAvatar)
-          return next(new HttpError("Couldn't update avatar", 404));
-      }
-    );
+      if (!updatedAvatar)
+        return next(new HttpError("Couldn't update avatar", 404));
+    });
 
-    res.json({ message: "Avatar updated successfully", avatar: avatarName });
+    res.json({ message: "Avatar updated successfully", data: avatarName });
   } catch (error) {
     return next(new HttpError(error));
   }
@@ -175,7 +172,69 @@ const changeAvatar = async (req, res, next) => {
 // Patch : /api/users/edit-user
 // Protected    => Only if you are logged in
 const editUser = async (req, res, next) => {
-  res.json({ message: "Edit Details route works" });
+  const { name, email, currentPassword, newPassword, confirmNewPassword, bio } =
+    req.body;
+
+  // if empty
+  if (
+    !name ||
+    !email ||
+    !bio ||
+    !currentPassword ||
+    !newPassword ||
+    !confirmNewPassword
+  ) {
+    return next(new HttpError("Please enter all fields", 422));
+  }
+
+  //find user
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new HttpError("User not found", 404));
+  }
+
+  //check if new email already exists
+  const newEmail = email.toLowerCase();
+  const emailExists = await User.findOne({ email: newEmail });
+  if (emailExists && emailExists._id.toString() != user._id.toString()) {
+    return next(new HttpError("Email already exists", 422));
+  }
+
+  // check password
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return next(new HttpError("Invalid Current Password", 422));
+  }
+
+  // check newpassword length
+  if (newPassword.trim().length < 6) {
+    return next(new HttpError("Password must be at least 6 characters", 422));
+  }
+
+  // check if passwords match
+  if (newPassword !== confirmNewPassword) {
+    return next(new HttpError("Passwords don't match", 422));
+  }
+
+  //encrypt new password
+  const salt = await bcrypt.genSalt(12);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  // update user
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { name, email: newEmail, password: hashedPassword, bio },
+    { new: true }
+  );
+  if (!updatedUser) {
+    return next(new HttpError("Couldn't update user", 404));
+  }
+
+  // all success
+  console.log(req.user);
+  res
+    .status(200)
+    .json({ message: "User updated successfully", data: updatedUser });
 };
 
 // ================================== Profile of User ==================================
@@ -191,7 +250,7 @@ const getUser = async (req, res, next) => {
     }
 
     // user found : fetch profile details
-    res.status(200).json(user);
+    res.status(200).json({ data: user });
   } catch (error) {
     return next(new HttpError(error, 404));
   }
@@ -206,7 +265,7 @@ const getAuthors = async (req, res, next) => {
     const authors = await User.find().select("-password");
 
     //send users
-    res.status(200).json(authors);
+    res.status(200).json({ data: authors });
   } catch (error) {
     return next(new HttpError(error, 404));
   }
