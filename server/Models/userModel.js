@@ -21,7 +21,7 @@ const userSchema = new Schema({
     type: String,
     default: "Introduce yourself in short 🤞🤞",
   },
-  post_count: {
+  postCount: {
     type: Number,
     default: 0,
   },

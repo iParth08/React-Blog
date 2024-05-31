@@ -8,6 +8,7 @@ import {
   getAuthors,
 } from "../Controllers/usersControllers.js";
 import authMiddleware from "../Middlewares/authMiddleware.js";
+
 const router = Router();
 
 router.get("/test", (req, res, next) => {
