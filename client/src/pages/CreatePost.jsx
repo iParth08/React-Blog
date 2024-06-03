@@ -1,9 +1,13 @@
 import React, { useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import redirectUnauthorized from "../util/authRedirect";
 
 // ? Send Data to Backend
 const CreatePost = () => {
+  //redirect if not logged in
+  redirectUnauthorized();
+
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Uncategorized");
   const [thumbnail, setThumbnail] = useState("");
@@ -81,15 +85,23 @@ const CreatePost = () => {
               ))}
             </select>
 
-            <ReactQuill modules={modules} formats={formats} value={content} className="quill-editor" ref={editorRef} />
-
-            <input
-              type="file"
-              name="thumbnail"
-              id="thumbnail"
-              accept="image/*"
-              onChange={(e) => setThumbnail(e.target.value)}
+            <ReactQuill
+              modules={modules}
+              formats={formats}
+              value={content}
+              className="quill-editor"
+              ref={editorRef}
             />
+            <label htmlFor="thumbnail">
+              Thumbnail (Upload Image):
+              <input
+                type="file"
+                name="thumbnail"
+                id="thumbnail"
+                accept="image/*"
+                onChange={(e) => setThumbnail(e.target.value)}
+              />
+            </label>
 
             <button className="btn primary">Create New Post</button>
           </form>

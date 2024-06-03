@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+import redirectUnauthorized from "../util/authRedirect";
 
 const DeletePost = () => {
-  return (
-    <div>DeletePost</div>
-  )
-}
+  redirectUnauthorized();
+  return <div>DeletePost</div>;
+};
 
-export default DeletePost
+export default DeletePost;

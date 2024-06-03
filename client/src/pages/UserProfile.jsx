@@ -9,7 +9,11 @@ import { GrTwitter } from "react-icons/gr";
 import { FaEdit } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 
+import redirectUnauthorized from "../util/authRedirect";
+
 const UserProfile = () => {
+  redirectUnauthorized();
+
   const [avatar, setAvatar] = useState(avatarImg);
   const [bio, setBio] = useState("Describe Yourself, Pretty Please 😁");
   const [authorData, setAuthorData] = useState({

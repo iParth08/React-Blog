@@ -3,14 +3,29 @@ import PostAuthor from "./PostAuthor";
 import { Link } from "react-router-dom";
 
 const PostItem = ({ post }) => {
-  const { id, thumbnail, title, desc, author, authorID, category } = post;
-  const shortDesc = desc.length > 145 ? desc.slice(0, 145) + "..." : desc;
+  const {
+    _id: id,
+    thumbnail,
+    title,
+    content,
+    author: authorID,
+    category,
+    updatedAt,
+  } = post;
+  const shortDesc =
+    content.length > 145 ? content.slice(0, 145) + "..." : content;
   const postTitle = title.length > 40 ? title.slice(0, 40) + "..." : title;
+  const poster = `${import.meta.env.VITE_ASSETS_URL}/uploads/${thumbnail}`;
+
+  const isValidDate = (date) => {
+    return !isNaN(new Date(date));
+  };
+
   return (
     <article className="post-item">
       <div
         className="post-thumbnail"
-        style={{ backgroundImage: `url(${thumbnail})` }}
+        style={{ backgroundImage: `url(${poster})` }}
       ></div>
 
       <div className="post-content">
@@ -19,7 +34,9 @@ const PostItem = ({ post }) => {
         </Link>
         <p>{shortDesc}</p>
         <div className="post-footer">
-          <PostAuthor author={author} authorID={authorID} />
+          {isValidDate(updatedAt) && (
+            <PostAuthor authorID={authorID} updatedAt={updatedAt} />
+          )}
           <Link to={`/posts/category/${category}`} className="btn category">
             {category}
           </Link>

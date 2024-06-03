@@ -18,7 +18,7 @@
 3. Set up base routes ! make sure routes match the routes in main.js
 4. Made void async controllers for user actions
 5. Created error handling middlewares
-6. Error Class is made <!-- TODO ? -->
+6. Error Class is made
 7. Made user schema
 8. Describing Register Controller
 9. Encrypt password
@@ -30,5 +30,4 @@
 15. Renaming avatar to avoid conflicts using uuid
 16. Authentication middleware for protected routes : place just in routes before controller
 17. Avatar upload and edit user complete
-
 18. Working on Post Controller Body

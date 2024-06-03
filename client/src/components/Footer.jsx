@@ -12,13 +12,13 @@ const Footer = () => {
           <Link to="posts/category/Mythology">Mythology</Link>
         </li>
         <li>
-          <Link to="posts/category/Ancient-Aliens">Ancient Alien</Link>
+          <Link to="posts/category/Ancient Aliens">Ancient Alien</Link>
         </li>
         <li>
           <Link to="posts/category/Goldilock">Goldilock</Link>
         </li>
         <li>
-          <Link to="posts/category/Star-and-Nebula">Star and Nebula</Link>
+          <Link to="posts/category/Star and Nebula">Star and Nebula</Link>
         </li>
         <li>
           <Link to="posts/category/Observatory">Observatory</Link>
@@ -27,10 +27,10 @@ const Footer = () => {
           <Link to="posts/category/Theory">Theory</Link>
         </li>
         <li>
-          <Link to="posts/category/Space-Agency">Space Agency</Link>
+          <Link to="posts/category/Space Agency">Space Agency</Link>
         </li>
         <li>
-          <Link to="posts/category/Future-Mission">Future Mission</Link>
+          <Link to="posts/category/Future Mission">Future Mission</Link>
         </li>
       </ul>
       <div className="container copyright">

@@ -1,27 +1,88 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PostAuthor from "../components/PostAuthor";
 import DUMMY_POSTS from "../assets/DummyPosts";
 import { Link } from "react-router-dom";
+import useUserContext from "../context/userContext";
+import axios from "axios";
+import Loader from "../components/Loader";
+import DeletePost from "../pages/DeletePost";
+import EditPost from "../pages/EditPost";
+import { useParams } from "react-router-dom";
+
 const PostDetail = () => {
-  const { author, authorID, id, thumbnail, title, content } = DUMMY_POSTS[0];
+  const [post, setPost] = useState(DUMMY_POSTS[0]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
+  const { currentUser } = useUserContext();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      setIsLoading(true);
+
+      try {
+        const getPost = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/posts/${id}`
+        );
+        const post = await getPost.data;
+        if (!post) setPost({});
+        else {
+          setPost(post);
+          console.log(post.updatedAt);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchPost();
+  }, [id]);
+
+  if (isLoading) return <Loader />;
+
+  const {
+    _id: postID,
+    thumbnail,
+    title,
+    content,
+    author: authorID,
+    category,
+    updatedAt,
+  } = post;
+
+  const isValidDate = (date) => {
+    return !isNaN(new Date(date));
+  };
+
   return (
     <div className="wrapper post-details">
       <div className="container post-card">
         <div className="post-header">
-          <PostAuthor author={author} authorID={authorID} />
-          <div className="mypost-controls">
-            <Link to={`/posts/${id}/edit`} className="btn primary">Edit</Link>
-            <Link to={`/posts/${id}/delete`} className="btn danger">Delete</Link>
-          </div>
+          {/* the below line is causing type error for updatedAt when refreshing */}
+          {isValidDate(updatedAt) && (
+            <PostAuthor authorID={authorID} updatedAt={updatedAt} />
+          )}
+
+          {currentUser?.id === authorID && (
+            <div className="mypost-controls">
+              <Link to={`/posts/${postID}/edit`} className="btn primary">
+                Edit
+              </Link>
+              <Link to={`/posts/${postID}/delete`} className="btn danger">
+                Delete
+              </Link>
+            </div>
+          )}
         </div>
         <div className="post-contents">
           <h1>{title}</h1>
-          <img src={thumbnail} alt="" />
+          <img
+            src={`${import.meta.env.VITE_ASSETS_URL}/uploads/${thumbnail}`}
+            alt=""
+          />
           <section>
-            {content} {/* ! HTML PARSE */}
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia, vero eligendi. Laudantium, hic ipsa! Cumque tenetur impedit hic officiis praesentium, laboriosam libero eum facilis culpa aliquid quidem iure at molestias nisi. Cumque quasi, magnam labore assumenda neque mollitia deserunt ea optio fugiat, ipsum dolorum ex voluptas. At rem earum aperiam?</p>
-
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, nostrum. Omnis nesciunt excepturi voluptates, quod quia quibusdam placeat iusto, totam cumque repellendus saepe repudiandae possimus corrupti harum cupiditate suscipit veritatis, quaerat ipsam. Ullam esse quia qui, exercitationem similique ipsa porro nihil quam hic accusamus rem suscipit laborum natus odio fugiat ea ut, est eaque vero harum? Maiores, in architecto hic pariatur debitis praesentium molestias explicabo sunt.</p>
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
           </section>
         </div>
       </div>

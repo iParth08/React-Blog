@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import "../styles/register.css"; // ? useless attempt
 import "../styles/profile.css";
@@ -12,11 +13,35 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
     setAuthorData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        authorData
+      );
+
+      const newUser = await response.data;
+
+      if (!newUser) {
+        setErrorMsg("Could not register user. Please try again.");
+      }
+      navigate("/login");
+    } catch (error) {
+      setErrorMsg(error.response.data.message);
+    }
   };
 
   return (
@@ -25,8 +50,8 @@ const Register = () => {
         <h1 className="page-heading">
           Unlock the universe. <span>Register</span> now to explore.
         </h1>
-        <form>
-          <p className="form-error">Error Message</p>
+        <form onSubmit={registerUser}>
+          {errorMsg && <p className="form-error">{errorMsg}</p>}
           <input
             type="text"
             name="name"

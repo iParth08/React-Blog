@@ -7,7 +7,7 @@ import { v4 as uuid } from "uuid";
 import fs from "fs";
 import path from "path";
 
-const __dirname = path.resolve();  //* to get absolute path ??
+const __dirname = path.resolve(); //* to get absolute path ??
 // console.log(__dirname);
 
 // ================================== Register User ==================================
@@ -90,7 +90,10 @@ const loginUser = async (req, res, next) => {
     // success
     res
       .status(200)
-      .json({ message: `User ${name}, Logged In Successfully`, data: token });
+      .json({
+        message: `User ${name}, Logged In Successfully`,
+        data: { id, name, token },
+      });
   } catch (error) {
     return next(
       new HttpError("User Login Failed. Please check credentials", 422)
@@ -167,7 +170,7 @@ const changeAvatar = async (req, res, next) => {
   }
 };
 
-// ==================================  User Details ==================================
+// ================================== Edit User Details ==================================
 // Task : Edit user details
 // Patch : /api/users/edit-user
 // Protected    => Only if you are logged in
@@ -250,7 +253,7 @@ const getUser = async (req, res, next) => {
     }
 
     // user found : fetch profile details
-    res.status(200).json({ data: user });
+    res.status(200).json(user);
   } catch (error) {
     return next(new HttpError(error, 404));
   }
@@ -265,7 +268,7 @@ const getAuthors = async (req, res, next) => {
     const authors = await User.find().select("-password");
 
     //send users
-    res.status(200).json({ data: authors });
+    res.status(200).json(authors);
   } catch (error) {
     return next(new HttpError(error, 404));
   }

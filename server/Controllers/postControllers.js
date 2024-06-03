@@ -247,7 +247,7 @@ const getAllPosts = async (req, res, next) => {
       return next(new HttpError("No posts found", 404));
     }
 
-    res.status(200).json({ data: posts });
+    res.status(200).json(posts);
   } catch (error) {
     return next(new HttpError(error, 404));
   }
@@ -265,7 +265,7 @@ const getDetailsOfPost = async (req, res, next) => {
     if (!post) {
       return next(new HttpError("Post not found", 404));
     }
-    res.status(200).json({ data: post });
+    res.status(200).json(post);
   } catch (error) {
     return next(new HttpError(error, 404));
   }
@@ -283,7 +283,7 @@ const getPostsByCategory = async (req, res, next) => {
     if (!catPosts || catPosts.length === 0) {
       return next(new HttpError("Post not found", 404));
     }
-    res.status(200).json({ data: catPosts });
+    res.status(200).json(catPosts);
   } catch (error) {
     return next(new HttpError(error, 404));
   }
@@ -303,7 +303,7 @@ const getPostsByAuthor = async (req, res, next) => {
     if (!authPosts || authPosts.length === 0) {
       return next(new HttpError("Post not found", 404));
     }
-    res.status(200).json({ data: authPosts });
+    res.status(200).json(authPosts);
   } catch (error) {
     return next(new HttpError(error, 404));
   }

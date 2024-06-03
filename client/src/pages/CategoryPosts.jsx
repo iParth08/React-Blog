@@ -5,18 +5,17 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import { useParams } from "react-router-dom";
 
-const AuthorPosts = () => {
+const CategoryPosts = () => {
   const [postsArr, setPostsArr] = useState([]);
-  const [authorName, setAuthorName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();
+  const { category } = useParams();
 
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
       try {
         const getPosts = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/posts/authors/${id}`
+          `${import.meta.env.VITE_BASE_URL}/posts/categories/${category}`
         );
         const posts = getPosts?.data;
         if (!posts) setPostsArr([]);
@@ -24,32 +23,13 @@ const AuthorPosts = () => {
           setPostsArr(posts);
         }
       } catch (error) {
-        console.log(error);
-      }
-      setIsLoading(false);
-    };
-
-    const fetchAuthor = async () => {
-      setIsLoading(true);
-      try {
-        const getAuthor = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/users/${id}`
-        );
-        const author = getAuthor?.data;
-        if (!author) setAuthorName("");
-        else {
-          setAuthorName(author.name);
-        }
-      } catch (error) {
         setPostsArr([]);
         console.log(error);
       }
       setIsLoading(false);
     };
-
-    fetchAuthor();
     fetchPosts();
-  }, [id]);
+  }, [category]);
 
   // just loader and nothing else
   if (isLoading) {
@@ -59,7 +39,7 @@ const AuthorPosts = () => {
   return (
     <div className="wrapper">
       <h1 className="page-heading">
-        Posts by <span> {`${authorName}`} </span>
+        Posts in <span>{`${category}`}</span>
       </h1>
       <section>
         {postsArr.length > 0 ? (
@@ -79,4 +59,4 @@ const AuthorPosts = () => {
   );
 };
 
-export default AuthorPosts;
+export default CategoryPosts;

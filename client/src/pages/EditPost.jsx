@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
+import redirectUnauthorized from "../util/authRedirect";
 // ! fetch & Update post
 
 const EditPost = () => {
+  redirectUnauthorized();
+
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Uncategorized");
   const [thumbnail, setThumbnail] = useState("");

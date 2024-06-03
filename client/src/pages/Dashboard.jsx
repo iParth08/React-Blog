@@ -3,8 +3,13 @@ import DUMMY_POSTS from "../assets/DummyPosts"; // ? Dummy, data needed
 import ErrorMsg from "../components/ErrorMsg";
 import PostItem from "../components/PostItem";
 import { Link } from "react-router-dom";
+import redirectUnauthorized from "../util/authRedirect";
+
 
 const Dashboard = () => {
+
+  redirectUnauthorized();
+
   const [postsArr, setPostsArr] = useState(DUMMY_POSTS);
   // const [postsArr, setPostsArr] = useState([]);
 

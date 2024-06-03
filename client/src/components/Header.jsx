@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import useUserContext from "../context/userContext";
 
 import Logo from "../assets/images/logo.png";
 
 const Header = () => {
   // ! loggedIn Author
-  const authorID = localStorage.getItem("userID") || "007";
+  const { currentUser } = useUserContext();
+
+  const authorID = currentUser?.id;
+  const authorName = currentUser?.name;
+
   // pathname
   const { pathname } = useLocation();
 
@@ -64,13 +69,13 @@ const Header = () => {
         </Link>
 
         {/* links */}
-        {showNav && (
+        {authorID && showNav && (
           <ul className="nav-menu" onClick={() => closeNavHandler()}>
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to={`/profile/${authorID}`}>Ernesti Echevalier</Link>
+              <Link to={`/profile/${authorID}`}>{authorName}</Link>
             </li>
             <li>
               <Link to="/create">New Post</Link>
@@ -80,6 +85,19 @@ const Header = () => {
             </li>
             <li>
               <Link to="/logout">Logout</Link>
+            </li>
+          </ul>
+        )}
+        {!authorID && showNav && (
+          <ul className="nav-menu" onClick={() => closeNavHandler()}>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/authors">Authors</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         )}

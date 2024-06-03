@@ -1,4 +1,4 @@
-import {resolve} from "path";
+import { resolve } from "path";
 import express from "express";
 import cors from "cors";
 import { connect } from "mongoose";
@@ -18,9 +18,8 @@ const __dirname = resolve();
 
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:3000" })); // ? testing purpose 5173
+app.use(cors({ credentials: true, origin: "http://localhost:5173" })); // ? testing purpose 5173
 app.use(fileUpload());
-
 
 // Setting up routes
 app.use("/api/users", userRoutes);
@@ -28,8 +27,8 @@ app.use("/api/posts", postRoutes);
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // error middleware
-app.use(notFound)
-app.use(errorHandler)
+app.use(notFound);
+app.use(errorHandler);
 
 // listen to port
 const PORT = process.env.PORT || 5000;
