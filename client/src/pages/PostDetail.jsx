@@ -27,7 +27,6 @@ const PostDetail = () => {
         if (!post) setPost({});
         else {
           setPost(post);
-          console.log(post.updatedAt);
         }
       } catch (error) {
         console.log(error);

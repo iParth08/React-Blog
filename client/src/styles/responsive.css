@@ -30,6 +30,7 @@
 
   input,
   select,
+  select:focus, /* ! check */
   form .form-error {
     width: 100%;
   }

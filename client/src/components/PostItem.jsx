@@ -32,7 +32,8 @@ const PostItem = ({ post }) => {
         <Link to={`/posts/${id}`}>
           <h3>{postTitle}</h3>
         </Link>
-        <p>{shortDesc}</p>
+
+        <p dangerouslySetInnerHTML={{ __html: shortDesc }}></p>
         <div className="post-footer">
           {isValidDate(updatedAt) && (
             <PostAuthor authorID={authorID} updatedAt={updatedAt} />

@@ -21,7 +21,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 3rem;
+  gap: 1rem;
   margin-bottom: 3rem;
 }
 
@@ -34,8 +34,13 @@
 .footer .category-list li a {
   color: var(--color-white);
   background-color: var(--color-gray-700);
-  padding: 0.9rem 1.5rem;
   border-radius: var(--radius-2);
+  font-size: 0.8rem;
+  display: flex;
+  height: 2.5rem;
+  width: 10rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer .category-list li a:hover {

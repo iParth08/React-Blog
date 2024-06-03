@@ -114,7 +114,7 @@ const editPost = async (req, res, next) => {
     //check if blank : React Quill already has 11 char from start
     if (!title || !category || content.length < 12) {
       return next(
-        new HttpError("Please enter all fields and choose thumbnail", 500)
+        new HttpError("Please enter all fields", 500)
       );
     }
 
