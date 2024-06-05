@@ -49,9 +49,11 @@
 
 .profile-avatar {
   width: 15rem;
+  height: 15rem;
   border: 1rem solid var(--color-white);
   border-radius: 100%;
-  background-color: var(--color-red);
+  background-image: url("../assets/images/hold_avatar.png");
+  background-size: cover;
   overflow: hidden;
 }
 
@@ -132,7 +134,5 @@
 .author-details form button {
   width: 70%;
 }
-
-
 
 /* Success or error msg */
