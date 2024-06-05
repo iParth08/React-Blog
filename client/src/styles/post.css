@@ -30,6 +30,10 @@
   padding: 0.6rem 1.5rem;
 }
 
+.post-content h3 {
+  height: 3rem;
+}
+
 .post-content h3:hover {
   color: var(--color-primary);
   text-decoration: none;

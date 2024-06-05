@@ -1,17 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DUMMY_POSTS from "../assets/DummyPosts"; // ? Dummy, data needed
 import ErrorMsg from "../components/ErrorMsg";
-import PostItem from "../components/PostItem";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import redirectUnauthorized from "../util/authRedirect";
-
+import DeletePost from "./DeletePost";
+import Loader from "../components/Loader";
+import axios from "axios";
 
 const Dashboard = () => {
-
   redirectUnauthorized();
+  const { id: authorID } = useParams();
 
   const [postsArr, setPostsArr] = useState(DUMMY_POSTS);
-  // const [postsArr, setPostsArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      try {
+        const getPosts = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/posts/authors/${authorID}`
+        );
+        const posts = getPosts?.data;
+        if (!posts) setPostsArr([]);
+        else {
+          setPostsArr(posts);
+        }
+      } catch (error) {
+        setPostsArr([]);
+        console.log(error);
+      }
+      setIsLoading(false);
+    };
+    fetchPosts();
+  }, []);
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="wrapper">
@@ -24,19 +48,24 @@ const Dashboard = () => {
           {postsArr.map((post) => (
             <article key={post.id} className="dash-post-item">
               <div className="post-data">
-                <img src={post.thumbnail} alt="" />
-                <h5>{post.title}</h5>
+                <img
+                  src={`${import.meta.env.VITE_ASSETS_URL}/uploads/${
+                    post.thumbnail
+                  }`}
+                  alt="thumbnail"
+                />
+                <h4>
+                  <i>{post.title}</i>
+                </h4>
               </div>
               <div className="post-action">
-                <Link to={`/posts/${post.id}`} className="btn sm">
+                <Link to={`/posts/${post._id}`} className="btn sm common">
                   View
                 </Link>
-                <Link to={`/posts/${post.id}/edit`} className="btn sm primary">
+                <Link to={`/posts/${post._id}/edit`} className="btn sm primary">
                   Edit
                 </Link>
-                <Link to={`/posts/${post.id}/delete`} className="btn sm danger">
-                  Delete
-                </Link>
+                <DeletePost postID={post._id} />
               </div>
             </article>
           ))}

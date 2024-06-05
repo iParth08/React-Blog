@@ -68,9 +68,7 @@ const PostDetail = () => {
               <Link to={`/posts/${postID}/edit`} className="btn primary">
                 Edit
               </Link>
-              <Link to={`/posts/${postID}/delete`} className="btn danger">
-                Delete
-              </Link>
+              <DeletePost postID={postID} />
             </div>
           )}
         </div>

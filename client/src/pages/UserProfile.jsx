@@ -10,9 +10,12 @@ import { FaEdit } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 
 import redirectUnauthorized from "../util/authRedirect";
+import useUserContext from "../context/userContext";
 
 const UserProfile = () => {
   redirectUnauthorized();
+  const { currentUser } = useUserContext();
+  const authorID = currentUser?.id;
 
   const [avatar, setAvatar] = useState(avatarImg);
   const [bio, setBio] = useState("Describe Yourself, Pretty Please 😁");
@@ -34,8 +37,6 @@ const UserProfile = () => {
   const updateAvatar = (e) => {
     setAvatar(e.target.files[0]);
   };
-
-  const authorID = localStorage.getItem("userID") || "007";
 
   return (
     <div className="wrapper">
