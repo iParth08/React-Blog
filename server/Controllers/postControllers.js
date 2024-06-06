@@ -95,108 +95,6 @@ const createPost = async (req, res, next) => {
 // Patch : /api/posts/edit/:id
 // Protected    => Only if you are logged in
 
-// const editPost = async (req, res, next) => {
-//   try {
-//     // old post
-//     const { id } = req.params;
-//     const oldPost = await Post.findById(id);
-//     // are you the owner
-//     if (oldPost.author.toString() !== req.user.id) {
-//       return next(
-//         new HttpError("You are not authorized to edit this post", 401)
-//       );
-//     }
-
-//     let newFilename;
-//     let updatedPost;
-
-//     const { title, content, category } = req.body;
-//     //check if blank : React Quill already has 11 char from start
-//     if (!title || !category || content.length < 12) {
-//       return next(new HttpError("Please enter all fields", 500));
-//     }
-
-//     // if no new thumbnail
-//     if (!req.files) {
-//       updatedPost = await Post.findByIdAndUpdate(
-//         id,
-//         { title, content, category },
-//         { new: true }
-//       );
-//       console.log("No new thumbnail");
-//     } else {
-//       console.log("new thumbnail");
-//       // delete old thumbnail
-
-//       if (fs.existsSync(path.join(__dirname, "uploads", oldPost.thumbnail))) {
-//         fs.unlink(
-//           path.join(__dirname, "uploads", oldPost.thumbnail),
-//           async (err) => {
-//             if (err) return next(new HttpError(err, 500));
-//           }
-//         );
-
-//         // extract thumbnail
-//         const { thumbnail } = req.files;
-
-//         // file type check
-//         if (
-//           thumbnail.mimetype !== "image/png" &&
-//           thumbnail.mimetype !== "image/jpg" &&
-//           thumbnail.mimetype !== "image/jpeg"
-//         ) {
-//           return next(
-//             new HttpError(
-//               "Unsupported file format. Please upload an png/jpg/jpeg",
-//               500
-//             )
-//           );
-//         }
-
-//         //file size check
-//         if (thumbnail.size > 2000000) {
-//           return next(
-//             new HttpError(
-//               "File size too large. Please upload an image less than 2MB",
-//               500
-//             )
-//           );
-//         }
-
-//         // renaming thumbnail : keep formate safe in the last
-//         newFilename = Date.now() + "-" + uuid() + "-" + thumbnail.name;
-
-//         // save thumbnail
-//         thumbnail.mv(
-//           path.join(__dirname, "uploads", newFilename),
-//           async (err) => {
-//             if (err) return next(new HttpError(err, 500));
-//             else {
-//               // update post in db
-//               updatedPost = await Post.findByIdAndUpdate(
-//                 id,
-//                 { title, content, category, thumbnail: newFilename },
-//                 { new: true }
-//               );
-
-//               if (!updatedPost) {
-//                 return next(new HttpError("Something went wrong", 500));
-//               }
-//             }
-//           }
-//         );
-//       }
-//     }
-//     if (updatedPost) {
-//       res.status(200).json({
-//         message: "Post updated successfully",
-//       });
-//     }
-//   } catch (error) {
-//     return next(new HttpError(error, 404));
-//   }
-// };
-
 const editPost = async (req, res, next) => {
   try {
     // Old post
@@ -302,8 +200,6 @@ const editPost = async (req, res, next) => {
     return next(new HttpError("An error occurred", 500));
   }
 };
-
-
 
 // ================================== Delete a Post ==================================
 // Task : Delete any of your post based on (post id)

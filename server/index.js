@@ -22,6 +22,7 @@ app.use(
   cors({
     credentials: true,
     origin: "https://react-blog-client-gamma.vercel.app",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 ); //? frontend url
 app.use(fileUpload());
