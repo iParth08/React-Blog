@@ -18,7 +18,12 @@ const __dirname = resolve();
 
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:5173" })); //? frontend url
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://react-blog-client-gamma.vercel.app",
+  })
+); //? frontend url
 app.use(fileUpload());
 
 //default testing route
