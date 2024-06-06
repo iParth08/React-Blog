@@ -13,7 +13,7 @@ const Posts = () => {
       setIsLoading(true);
       try {
         const getPosts = await axios.get(
-          `api/posts`
+          `${import.meta.env.VITE_BASE_URL}/posts`
         );
         const posts = getPosts?.data;
         if (!posts) setPostsArr([]);
