@@ -19,7 +19,7 @@ const PostAuthor = ({ updatedAt, authorID }) => {
     const fetchAuthor = async () => {
       try {
         const getAuthor = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/users/${authorID}`
+          `api/users/${authorID}`
         );
         const author = getAuthor.data;
         if (!author) setAuthorName("");
@@ -27,7 +27,7 @@ const PostAuthor = ({ updatedAt, authorID }) => {
           setAuthorName(author.name);
           if (author.avatar)
             setAvatar(
-              `${import.meta.env.VITE_ASSETS_URL}/uploads/${author.avatar}`
+              `foo/uploads/${author.avatar}`
             );
           else setAvatar(profile);
         }
