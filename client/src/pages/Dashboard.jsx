@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DUMMY_POSTS from "../assets/DummyPosts"; // ? Dummy, data needed
 import ErrorMsg from "../components/ErrorMsg";
 import { Link, useParams } from "react-router-dom";
 import redirectUnauthorized from "../util/authRedirect";
@@ -11,7 +10,7 @@ const Dashboard = () => {
   redirectUnauthorized();
   const { id: authorID } = useParams();
 
-  const [postsArr, setPostsArr] = useState(DUMMY_POSTS);
+  const [postsArr, setPostsArr] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const Dashboard = () => {
       {postsArr.length > 0 ? (
         <div className="container dashboard-posts">
           {postsArr.map((post) => (
-            <article key={post.id} className="dash-post-item">
+            <article key={post._id} className="dash-post-item">
               <div className="post-data">
                 <img
                   src={`${import.meta.env.VITE_ASSETS_URL}/uploads/${

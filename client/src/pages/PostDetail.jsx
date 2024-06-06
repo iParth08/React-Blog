@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PostAuthor from "../components/PostAuthor";
-import DUMMY_POSTS from "../assets/DummyPosts";
 import { Link } from "react-router-dom";
 import useUserContext from "../context/userContext";
 import axios from "axios";
 import Loader from "../components/Loader";
 import DeletePost from "../pages/DeletePost";
-import EditPost from "../pages/EditPost";
 import { useParams } from "react-router-dom";
 
 const PostDetail = () => {
-  const [post, setPost] = useState(DUMMY_POSTS[0]);
+  const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const { currentUser } = useUserContext();
@@ -58,7 +56,7 @@ const PostDetail = () => {
     <div className="wrapper post-details">
       <div className="container post-card">
         <div className="post-header">
-          {/* the below line is causing type error for updatedAt when refreshing */}
+          
           {isValidDate(updatedAt) && (
             <PostAuthor authorID={authorID} updatedAt={updatedAt} />
           )}
@@ -81,6 +79,10 @@ const PostDetail = () => {
           <section>
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
           </section>
+
+          <Link to={`/posts/category/${category}`} className="btn primary">
+            {category}
+          </Link>
         </div>
       </div>
     </div>

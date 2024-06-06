@@ -88,12 +88,10 @@ const loginUser = async (req, res, next) => {
     });
 
     // success
-    res
-      .status(200)
-      .json({
-        message: `User ${name}, Logged In Successfully`,
-        data: { id, name, token },
-      });
+    res.status(200).json({
+      message: `User ${name}, Logged In Successfully`,
+      data: { id, name, token },
+    });
   } catch (error) {
     return next(
       new HttpError("User Login Failed. Please check credentials", 422)
@@ -162,9 +160,10 @@ const changeAvatar = async (req, res, next) => {
 
       if (!updatedAvatar)
         return next(new HttpError("Couldn't update avatar", 404));
-    });
 
-    res.json({ message: "Avatar updated successfully", data: avatarName });
+      // success
+      res.json(updatedAvatar);
+    });
   } catch (error) {
     return next(new HttpError(error));
   }
@@ -175,8 +174,14 @@ const changeAvatar = async (req, res, next) => {
 // Patch : /api/users/edit-user
 // Protected    => Only if you are logged in
 const editUser = async (req, res, next) => {
-  const { name, email, currentPassword, newPassword, confirmNewPassword, bio } =
-    req.body;
+  const {
+    name,
+    email,
+    currentPassword,
+    newPassword,
+    confirmPassword: confirmNewPassword,
+    bio,
+  } = req.body;
 
   // if empty
   if (

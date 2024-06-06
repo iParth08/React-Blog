@@ -12,7 +12,6 @@ import "../styles/profile.css";
 import "../styles/dashboard.css";
 import "../styles/author.css";
 import "../styles/createpost.css";
-
 import "../styles/responsive.css";
 
 

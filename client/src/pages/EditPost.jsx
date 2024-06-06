@@ -84,13 +84,20 @@ const EditPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // !
+    console.table(["Creating Form", title, category, thumbnail, content]);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("category", category);
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
 
+    // !
+    console.log(...formData);
+
     try {
+      console.log("making patch request"); // !
+
       const response = await axios.patch(
         `${import.meta.env.VITE_BASE_URL}/posts/edit/${id}`,
         formData,
@@ -102,6 +109,9 @@ const EditPost = () => {
           },
         }
       );
+
+      console.log("Resolved : ", response); // !
+      console.log(response.data.message);
 
       if (response.status === 200) {
         console.log(response.data.message);
