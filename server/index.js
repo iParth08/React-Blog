@@ -18,8 +18,13 @@ const __dirname = resolve();
 
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:5173" })); // ? testing purpose 5173
+app.use(cors({ credentials: true, origin: "http://localhost:5173" })); //? frontend url
 app.use(fileUpload());
+
+//default testing route
+app.get("/", (req, res) => {
+  res.send("Radhe Radhe! Bhaiya");
+});
 
 // Setting up routes
 app.use("/api/users", userRoutes);
